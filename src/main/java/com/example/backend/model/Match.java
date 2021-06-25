@@ -1,4 +1,4 @@
-package model;
+package com.example.backend.model;
 import lombok.Data;
 import lombok.Value;
 
