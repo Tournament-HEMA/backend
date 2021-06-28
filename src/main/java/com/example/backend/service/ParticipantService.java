@@ -13,7 +13,7 @@ public interface ParticipantService {
 
     Participant read(String firstName);
 
-    Participant readv2(String firstName, String lastName);
+    Participant readV2(String firstName, String lastName);
 
     boolean update(Participant oldParticipant, Participant newParticipant);
 

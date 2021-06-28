@@ -6,11 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.backend.service.ParticipantService;
-import com.example.backend.service.ParticipantServiceImpl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -50,7 +47,7 @@ public class ParticipantController {
     public ResponseEntity<Participant> readv2(@RequestParam(value = "firstName") String firstName,
                                             @RequestParam(value = "lastName") String lastName)
     {
-        final Participant participant = participantService.readv2(firstName, lastName);
+        final Participant participant = participantService.readV2(firstName, lastName);
 
         return participant != null
                 ? new ResponseEntity<>(participant, HttpStatus.OK)
@@ -61,7 +58,7 @@ public class ParticipantController {
     public ResponseEntity<?> update(@RequestParam(value = "firstName") String firstName,
                                     @RequestParam(value = "lastName") String lastName,
                                     @RequestBody Participant newParticipant) {
-        Participant oldParticipant = participantService.readv2(firstName, lastName);
+        Participant oldParticipant = participantService.readV2(firstName, lastName);
         final boolean updated = participantService.update(oldParticipant, newParticipant);
 
         return updated
@@ -72,7 +69,7 @@ public class ParticipantController {
     @DeleteMapping(value = "/participants")
     public ResponseEntity<?> delete(@RequestParam(value = "firstName") String firstName,
                                     @RequestParam(value = "lastName") String lastName) {
-        Participant participant = participantService.readv2(firstName, lastName);
+        Participant participant = participantService.readV2(firstName, lastName);
         final boolean deleted = participantService.delete(participant);
 
         return deleted

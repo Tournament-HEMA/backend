@@ -23,10 +23,10 @@ public class DataSourceConfiguration {
     public DataSource getDataSource() {
         return DataSourceBuilder
                 .create()
-                .url(url)
-                .username(username)
-                .password(password)
-                .driverClassName(driver).build();
+                .url(this.url)
+                .username(this.username)
+                .password(this.password)
+                .driverClassName(this.driver).build();
     }
     @Bean
     public NamedParameterJdbcTemplate getTemplate(@Autowired DataSource dataSource)

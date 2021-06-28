@@ -1,13 +1,16 @@
-create table participant.table_name
+create schema participant;
+
+create table if not exists participant.participants
 (
-    id uuid not null,
+    id uuid not null
+    constraint table_name_pk
+    primary key,
     "firstName" varchar not null,
     "lastName" varchar not null
 );
 
-create unique index table_name_id_uindex
-	on participant.table_name (id);
+alter table participant.participants owner to "Admin";
 
-alter table participant.table_name
-    add constraint table_name_pk
-        primary key (id);
+create unique index if not exists table_name_id_uindex
+	on participant.participants (id);
+
