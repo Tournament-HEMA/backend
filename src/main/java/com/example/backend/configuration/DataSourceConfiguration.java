@@ -19,6 +19,7 @@ public class DataSourceConfiguration {
     private String password;
     @Value("${spring.datasource.driver-class-name}")
     private String driver;
+    // Разделяй методы пустой строкой
     @Bean
     public DataSource getDataSource() {
         return DataSourceBuilder

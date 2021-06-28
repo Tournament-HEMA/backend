@@ -26,11 +26,14 @@ public class ParticipantRepository {
 
     public List<Participant> readAll()
     {
+        /* ковычки в конце запроса не нужны
+        * пиши команды либо большими либо маленькими буквами. Select .. From выглядит странно */
         String sql = "Select * From participant.participants;";
         return template.query(sql, participantMapper);
 
     }
 
+    /* Убери ковычки, засоряет код */
     public void create(Participant participant)
     {
         String sql = "Insert Into participant.participants (\"id\", \"firstName\", \"lastName\") Values (:id, :firstName, :lastName)";
@@ -41,6 +44,11 @@ public class ParticipantRepository {
         template.update(sql, params);
     }
 
+    /* Очень странный метод
+    1. Если у тебя есть сущьность oldParticipant и newParticipant, значит у тебя есть id старого фихтуна
+    2. Ни кто тебе не мешает строить параметризированный запрос через конкантинацию: sql += "firstname = :firstname" и тому подобное
+    3. Много продублированного кода
+    * */
     public boolean update(Participant oldParticipant, Participant newParticipant) {
         String sql = "";
         Map<String, Object> params = new HashMap<>();
@@ -65,6 +73,7 @@ public class ParticipantRepository {
                 params.put("oldLastName", oldParticipant.getFirstName());
             }
         }
+        // Некрасивый код
         if(!sql.isEmpty()) {
             template.update(sql, params);
             return true;
