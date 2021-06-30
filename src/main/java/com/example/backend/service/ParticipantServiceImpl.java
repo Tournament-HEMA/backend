@@ -1,59 +1,71 @@
 package com.example.backend.service;
 
 import com.example.backend.model.Participant;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.example.backend.repository.ParticipantRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
 public class ParticipantServiceImpl implements ParticipantService {
-    private static List<Participant> PARTICIPANT_Repository_List = new ArrayList<Participant>();
 
-    private static ObjectIdGenerators.UUIDGenerator uuidGenerator = new ObjectIdGenerators.UUIDGenerator();
+    @Autowired
+    private ParticipantRepository participantRepository;
 
     @Override
-    public void create(Participant participant) {
-        UUID participantId = uuidGenerator.generateId(participant.getId());
-        participant.setId(participantId);
-        PARTICIPANT_Repository_List.add(participant);
+    public boolean create(Participant participant) {
+        return participantRepository.create(participant);
     }
 
     @Override
-    public List<Participant> readAll() {
-        return PARTICIPANT_Repository_List;
+    public List<Participant> findAll() {
+        return participantRepository.findAll();
     }
 
     @Override
-    public Participant read(String firstName) {
-        for(Participant participant : PARTICIPANT_Repository_List){
-            if(participant.getFirstName().equals(firstName))
-                return participant;
+    public List<Participant> findByFirstName(String firstName) {
+        try {
+            return participantRepository.search(firstName);
         }
-        return null;
-    }
-    @Override
-    public Participant readv2(String firstName, String lastName) {
-        for(Participant participant : PARTICIPANT_Repository_List){
-            if(participant.getFirstName().equals(firstName) && participant.getLastName().equals(lastName))
-                return participant;
-        }
-        return null;
+        catch (Exception e) { return null;}
     }
 
     @Override
-    public boolean update(Participant oldParticipant, Participant newParticipant) {
-        if (PARTICIPANT_Repository_List.contains(oldParticipant)) {
-            newParticipant.setId(oldParticipant.getId());
-            PARTICIPANT_Repository_List.remove(oldParticipant);
-            PARTICIPANT_Repository_List.add(newParticipant);
-            return true;
+    public List<Participant> findByFirstNameAndByLastName(String firstName, String lastName) {
+        try {
+            return participantRepository.search(firstName, lastName);
         }
+        catch (Exception e) { return null;}
+    }
+
+    @Override
+    public Participant findByFirstNameByLastNameAndByNumber(String firstName, String lastName, int number) {
+        try {
+            return participantRepository.search(firstName, lastName, number);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Participant findByNumber(int number) {
+        try {
+            return participantRepository.search(number);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean update(int oldParticipantNumber, Participant newParticipant) {
+        if (!newParticipant.equals(null))
+            return participantRepository.update(oldParticipantNumber, newParticipant);
         return false;
     }
 
     @Override
-    public boolean delete(Participant participant) {
-        return PARTICIPANT_Repository_List.remove(participant);
+    public boolean delete(int number) {
+        return participantRepository.delete(number);
     }
 }

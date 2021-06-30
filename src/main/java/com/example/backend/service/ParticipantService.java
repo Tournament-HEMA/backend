@@ -7,15 +7,19 @@ import java.util.UUID;
 
 public interface ParticipantService {
 
-    void create(Participant participant);
+    boolean create(Participant participant);
 
-    List<Participant> readAll();
+    List<Participant> findAll();
 
-    Participant read(String firstName);
+    List<Participant> findByFirstName(String firstName);
 
-    Participant readv2(String firstName, String lastName);
+    List<Participant> findByFirstNameAndByLastName(String firstName, String lastName);
 
-    boolean update(Participant oldParticipant, Participant newParticipant);
+    Participant findByFirstNameByLastNameAndByNumber(String firstName, String lastName, int number);
 
-    boolean delete(Participant participant);
+    Participant findByNumber(int number);
+
+    boolean update(int oldParticipantNumber, Participant newParticipant);
+
+    boolean delete(int number);
 }

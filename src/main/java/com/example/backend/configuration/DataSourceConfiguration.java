@@ -19,15 +19,17 @@ public class DataSourceConfiguration {
     private String password;
     @Value("${spring.datasource.driver-class-name}")
     private String driver;
+
     @Bean
     public DataSource getDataSource() {
         return DataSourceBuilder
                 .create()
-                .url(url)
-                .username(username)
-                .password(password)
-                .driverClassName(driver).build();
+                .url(this.url)
+                .username(this.username)
+                .password(this.password)
+                .driverClassName(this.driver).build();
     }
+
     @Bean
     public NamedParameterJdbcTemplate getTemplate(@Autowired DataSource dataSource)
     {
