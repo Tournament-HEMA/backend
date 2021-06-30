@@ -5,8 +5,8 @@ create table if not exists participant.participants
     id uuid not null
     constraint table_name_pk
     primary key,
-    "firstName" varchar not null,
-    "lastName" varchar not null
+    "firstname" varchar not null,
+    "lastname" varchar not null
 );
 
 alter table participant.participants owner to "Admin";

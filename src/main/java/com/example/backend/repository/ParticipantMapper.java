@@ -16,6 +16,7 @@ public class ParticipantMapper implements RowMapper<Participant> {
         participant.setId(UUID.fromString(rs.getString("id")));
         participant.setFirstName(rs.getString("firstName"));
         participant.setLastName(rs.getString("lastName"));
+        participant.setNumber(rs.getInt("number"));
         return participant;
     }
 }

@@ -21,33 +21,58 @@ public class ParticipantController {
 
     @PostMapping(value = "/participants")
     public ResponseEntity<?> create(@RequestBody Participant participant) {
-        participantService.create(participant);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        final boolean created = participantService.create(participant);
+        return created
+                ? new ResponseEntity<>(HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
     @GetMapping(value = "/participants")
-    public ResponseEntity<List<Participant>> readAll() {
-        final List<Participant> participants = participantService.readAll();
+    public ResponseEntity<List<Participant>> findAll() {
+        final List<Participant> participants = participantService.findAll();
 
         return participants != null &&  !participants.isEmpty()
                 ? new ResponseEntity<>(participants, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/participants/read")
-    public ResponseEntity<Participant> read(@RequestParam(value = "firstName") String firstName)
+    @GetMapping(value = "/participants/findByName")
+    public ResponseEntity<List<Participant>> findByFirstName(@RequestParam(value = "firstName") String firstName)
     {
-        final Participant participant = participantService.read(firstName);
+        final List<Participant> participants = participantService.findByFirstName(firstName);
 
-        return (participant != null)
+        return (participants != null)
+                ? new ResponseEntity<>(participants, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping(value = "/participants/findByNameSurname")
+    public ResponseEntity<List<Participant>> findByFirstNameAndByLastName(@RequestParam(value = "firstName") String firstName,
+                                                                    @RequestParam(value = "lastName") String lastName)
+    {
+        final List<Participant> participants = participantService.findByFirstNameAndByLastName(firstName, lastName);
+
+        return participants != null
+                ? new ResponseEntity<>(participants, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping(value = "/participants/findByNameSurnameNumber")
+    public ResponseEntity<Participant> findByFirstNameByLastNameAndByNumber(@RequestParam(value = "firstName") String firstName,
+                                                                            @RequestParam(value = "lastName") String lastName,
+                                                                            @RequestParam(value = "number") int number)
+    {
+        final Participant participant = participantService.findByFirstNameByLastNameAndByNumber(firstName, lastName, number);
+
+        return participant != null
                 ? new ResponseEntity<>(participant, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-    @GetMapping(value = "/participants/readv2")
-    public ResponseEntity<Participant> readv2(@RequestParam(value = "firstName") String firstName,
-                                            @RequestParam(value = "lastName") String lastName)
+
+    @GetMapping(value = "/participants/findByNumber")
+    public ResponseEntity<Participant> findByNumber(@RequestParam(value = "number") int number)
     {
-        final Participant participant = participantService.readV2(firstName, lastName);
+        final Participant participant = participantService.findByNumber(number);
 
         return participant != null
                 ? new ResponseEntity<>(participant, HttpStatus.OK)
@@ -55,11 +80,9 @@ public class ParticipantController {
     }
 
     @PutMapping(value = "/participants")
-    public ResponseEntity<?> update(@RequestParam(value = "firstName") String firstName,
-                                    @RequestParam(value = "lastName") String lastName,
+    public ResponseEntity<?> update(@RequestParam(value = "number") int number,
                                     @RequestBody Participant newParticipant) {
-        Participant oldParticipant = participantService.readV2(firstName, lastName);
-        final boolean updated = participantService.update(oldParticipant, newParticipant);
+        final boolean updated = participantService.update(number, newParticipant);
 
         return updated
                 ? new ResponseEntity<>(HttpStatus.OK)
@@ -67,10 +90,8 @@ public class ParticipantController {
     }
 
     @DeleteMapping(value = "/participants")
-    public ResponseEntity<?> delete(@RequestParam(value = "firstName") String firstName,
-                                    @RequestParam(value = "lastName") String lastName) {
-        Participant participant = participantService.readV2(firstName, lastName);
-        final boolean deleted = participantService.delete(participant);
+    public ResponseEntity<?> delete(@RequestParam(value = "number") int number) {
+        final boolean deleted = participantService.delete(number);
 
         return deleted
                 ? new ResponseEntity<>(HttpStatus.OK)
