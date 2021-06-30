@@ -2,7 +2,6 @@ package com.example.backend.repository;
 
 import com.example.backend.model.Participant;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -29,7 +28,7 @@ public class ParticipantRepository {
         String sql = "SELECT * FROM participant.participants WHERE firstname = :firstname ORDER BY number";
         SqlParameterSource params = new MapSqlParameterSource()
                 .addValue("firstname", firstname);
-        return template.query(sql, participantMapper);
+        return template.query(sql, params, participantMapper);
     }
 
     public List<Participant> search(String firstname, String lastname)
