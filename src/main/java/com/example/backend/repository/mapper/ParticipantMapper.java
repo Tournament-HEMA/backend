@@ -1,4 +1,4 @@
-package com.example.backend.repository;
+package com.example.backend.repository.mapper;
 
 import com.example.backend.model.Participant;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,10 +13,18 @@ public class ParticipantMapper implements RowMapper<Participant> {
     @Override
     public Participant mapRow(ResultSet rs, int rowNum) throws SQLException {
         Participant participant = new Participant();
-        participant.setId(UUID.fromString(rs.getString("id")));
-        participant.setFirstName(rs.getString("firstName"));
-        participant.setLastName(rs.getString("lastName"));
+        participant.setHemaratingsId(UUID.fromString(rs.getString("hemaratings_id")));
         participant.setNumber(rs.getInt("number"));
+        participant.setFirstName(rs.getString("firstname"));
+        participant.setLastName(rs.getString("lastname"));
+        participant.setPatronymic(rs.getString("patronymic"));
+        String clubId = rs.getString("club_id");
+        if(clubId != null) {
+            participant.setClubId(UUID.fromString(clubId));
+        } else {
+            participant.setClubId(null);
+        }
+
         return participant;
     }
 }

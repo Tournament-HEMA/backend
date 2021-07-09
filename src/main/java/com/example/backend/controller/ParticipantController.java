@@ -1,13 +1,14 @@
 package com.example.backend.controller;
 
 import com.example.backend.model.Participant;
+import com.example.backend.service.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.backend.service.ParticipantService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -48,9 +49,21 @@ public class ParticipantController {
 
     @GetMapping(value = "/participants/findByNameSurname")
     public ResponseEntity<List<Participant>> findByFirstNameAndByLastName(@RequestParam(value = "firstName") String firstName,
-                                                                    @RequestParam(value = "lastName") String lastName)
+                                                                          @RequestParam(value = "lastName") String lastName)
     {
         final List<Participant> participants = participantService.findByFirstNameAndByLastName(firstName, lastName);
+
+        return participants != null
+                ? new ResponseEntity<>(participants, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping(value = "/participants/findByNameSurnamePatronymic")
+    public ResponseEntity<List<Participant>> findByFirstNameByLastNameAndByPatronymic(@RequestParam(value = "firstName") String firstName,
+                                                                                      @RequestParam(value = "lastName") String lastName,
+                                                                                      @RequestParam(value = "patronymic") String patronymic)
+    {
+        final List<Participant> participants = participantService.findByFirstNameByLastNameAndByPatronymic(firstName, lastName, patronymic);
 
         return participants != null
                 ? new ResponseEntity<>(participants, HttpStatus.OK)
@@ -76,6 +89,16 @@ public class ParticipantController {
 
         return participant != null
                 ? new ResponseEntity<>(participant, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping(value = "/participants/findByClubId")
+    public ResponseEntity<List<Participant>> findByClubId(@RequestParam(value = "clubId") UUID clubId)
+    {
+        final List<Participant> participants = participantService.findByClubId(clubId);
+
+        return participants != null
+                ? new ResponseEntity<>(participants, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 

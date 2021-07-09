@@ -5,8 +5,10 @@ import java.util.UUID;
 
 @Data
 public class Participant {
-    private UUID id;
+    private UUID hemaratingsId;
+    private int number;
     private String firstName;
     private String lastName;
-    private int number;
+    private String patronymic;
+    private UUID clubId;
 }

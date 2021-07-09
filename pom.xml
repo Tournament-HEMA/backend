@@ -51,7 +51,25 @@
             <artifactId>postgresql</artifactId>
             <version>42.2.15</version>
         </dependency>
-<!--    implemented          -->
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <!--    implemented          -->
 
 <!--        <dependency>-->
 <!--            <groupId>org.slf4j</groupId>-->
