@@ -20,7 +20,7 @@ public class DuelController {
         this.duelService = duelService;
     }
 
-    @PostMapping(value = "/duels")
+    @PostMapping(value = "/user/duels")
     public ResponseEntity<?> create(@RequestBody Duel duel) {
         final boolean created = duelService.create(duel);
         return created
@@ -28,7 +28,7 @@ public class DuelController {
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
-    @GetMapping(value = "/duels")
+    @GetMapping(value = "/guest/duels")
     public ResponseEntity<List<Duel>> findAll() {
         final List<Duel> duels = duelService.findAll();
 
@@ -37,7 +37,7 @@ public class DuelController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/duels/findById")
+    @GetMapping(value = "/guest/duels/findById")
     public ResponseEntity<Duel> findByDuelId(@RequestParam(value = "duelId") UUID duelId)
     {
         final Duel duel = duelService.findByDuelId(duelId);
@@ -47,7 +47,7 @@ public class DuelController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/duels/findByRoundId")
+    @GetMapping(value = "/guest/duels/findByRoundId")
     public ResponseEntity<List<Duel>> findByRoundId(@RequestParam(value = "roundId") UUID roundId)
     {
         final List<Duel> duels = duelService.findByRoundId(roundId);
@@ -57,7 +57,7 @@ public class DuelController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/duels/findByRoundIdAndNumber")
+    @GetMapping(value = "/guest/duels/findByRoundIdAndNumber")
     public ResponseEntity<Duel> findByRoundIdAndNumber(@RequestParam(value = "roundId") UUID roundId,
                                                        @RequestParam(value = "number") int number)
     {
@@ -68,7 +68,7 @@ public class DuelController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/duels/findByParticipantId")
+    @GetMapping(value = "/guest/duels/findByParticipantId")
     public ResponseEntity<List<Duel>> findByParticipantId(@RequestParam(value = "participantId") UUID participantId)
     {
         final List<Duel> duels = duelService.findByParticipantId(participantId);
@@ -78,7 +78,7 @@ public class DuelController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/duels/findByParticipantIdAndRoundId")
+    @GetMapping(value = "/guest/duels/findByParticipantIdAndRoundId")
     public ResponseEntity<List<Duel>> findByParticipantIdAndRoundId(@RequestParam(value = "participantId") UUID participantId,
                                                                     @RequestParam(value = "roundId") UUID roundId)
     {
@@ -89,7 +89,7 @@ public class DuelController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping(value = "/duels")
+    @PutMapping(value = "/user/duels")
     public ResponseEntity<?> update(@RequestParam(value = "duelId") UUID duelId,
                                     @RequestBody Duel newDuel) {
         final boolean updated = duelService.update(duelId, newDuel);
@@ -99,7 +99,7 @@ public class DuelController {
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
-    @DeleteMapping(value = "/duels")
+    @DeleteMapping(value = "/user/duels")
     public ResponseEntity<?> delete(@RequestParam(value = "duelId") UUID duelId) {
         final boolean deleted = duelService.delete(duelId);
 

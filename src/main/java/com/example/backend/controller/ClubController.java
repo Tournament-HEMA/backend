@@ -20,7 +20,7 @@ public class ClubController {
         this.clubService = clubService;
     }
 
-    @PostMapping(value = "/clubs")
+    @PostMapping(value = "/user/clubs")
     public ResponseEntity<?> create(@RequestBody Club club) {
         final boolean created = clubService.create(club);
         return created
@@ -28,7 +28,7 @@ public class ClubController {
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
-    @GetMapping(value = "/clubs")
+    @GetMapping(value = "/guest/clubs")
     public ResponseEntity<List<Club>> findAll() {
         final List<Club> clubs = clubService.findAll();
 
@@ -37,7 +37,7 @@ public class ClubController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/clubs/findById")
+    @GetMapping(value = "/guest/clubs/findById")
     public ResponseEntity<Club> findByClubId(@RequestParam(value = "clubId") UUID clubId)
     {
         final Club club = clubService.findByClubId(clubId);
@@ -47,7 +47,7 @@ public class ClubController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/clubs/findByClubname")
+    @GetMapping(value = "/guest/clubs/findByClubname")
     public ResponseEntity<Club> findByClubname(@RequestParam(value = "clubname") String clubname)
     {
         final Club club = clubService.findByClubname(clubname);
@@ -57,7 +57,7 @@ public class ClubController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/clubs/findByActive")
+    @GetMapping(value = "/guest/clubs/findByActive")
     public ResponseEntity<List<Club>> findByActive(@RequestParam(value = "active") boolean active)
     {
         final List<Club> clubs = clubService.findByActive(active);
@@ -67,7 +67,7 @@ public class ClubController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/clubs/findByCity")
+    @GetMapping(value = "/guest/clubs/findByCity")
     public ResponseEntity<List<Club>> findByCity(@RequestParam(value = "city") String city)
     {
         final List<Club> clubs = clubService.findByCity(city);
@@ -77,7 +77,7 @@ public class ClubController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping(value = "/clubs")
+    @PutMapping(value = "/user/clubs")
     public ResponseEntity<?> update(@RequestParam(value = "clubId") UUID oldClubId,
                                     @RequestBody Club newClub) {
         final boolean updated = clubService.update(oldClubId, newClub);
@@ -87,7 +87,7 @@ public class ClubController {
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
-    @DeleteMapping(value = "/clubs")
+    @DeleteMapping(value = "/user/clubs")
     public ResponseEntity<?> delete(@RequestParam(value = "clubId") UUID clubId) {
         final boolean deleted = clubService.delete(clubId);
 

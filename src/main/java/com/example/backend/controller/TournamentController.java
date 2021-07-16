@@ -21,7 +21,7 @@ public class TournamentController {
         this.tournamentService = tournamentService;
     }
 
-    @PostMapping(value = "/tournaments")
+    @PostMapping(value = "/user/tournaments")
     public ResponseEntity<?> create(@RequestBody Tournament tournament) {
         final boolean created = tournamentService.create(tournament);
         return created
@@ -29,7 +29,7 @@ public class TournamentController {
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
-    @GetMapping(value = "/tournaments")
+    @GetMapping(value = "/guest/tournaments")
     public ResponseEntity<List<Tournament>> findAll() {
         final List<Tournament> tournaments = tournamentService.findAll();
 
@@ -38,7 +38,7 @@ public class TournamentController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/tournaments/findById")
+    @GetMapping(value = "/guest/tournaments/findById")
     public ResponseEntity<Tournament> findByTournamentId(@RequestParam(value = "tournamentId") UUID tournamentId)
     {
         final Tournament tournament = tournamentService.findByTournamentId(tournamentId);
@@ -48,7 +48,7 @@ public class TournamentController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/tournaments/findByName")
+    @GetMapping(value = "/guest/tournaments/findByName")
     public ResponseEntity<Tournament> findByName(@RequestParam(value = "name") String name)
     {
         final Tournament tournament = tournamentService.findByName(name);
@@ -58,7 +58,7 @@ public class TournamentController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping(value = "/tournaments")
+    @PutMapping(value = "/user/tournaments")
     public ResponseEntity<?> update(@RequestParam(value = "tournamentId") UUID tournamentId,
                                     @RequestBody Tournament newTournament) {
         final boolean updated = tournamentService.update(tournamentId, newTournament);
@@ -68,7 +68,7 @@ public class TournamentController {
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
-    @DeleteMapping(value = "/tournaments")
+    @DeleteMapping(value = "/user/tournaments")
     public ResponseEntity<?> delete(@RequestParam(value = "tournamentId") UUID tournamentId) {
         final boolean deleted = tournamentService.delete(tournamentId);
 
