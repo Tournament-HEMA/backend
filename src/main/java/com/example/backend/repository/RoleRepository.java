@@ -31,18 +31,22 @@ public class RoleRepository {
         return template.queryForObject(sql, params, roleMapper);
     }
 
-    public Set<Role> search(List<UserRole> userRoles){ //todo высокая вероятность испачкаться грязью..
+    public Set<Role> search(List<UserRole> userRoles) { //todo высокая вероятность испачкаться грязью..
         if (userRoles == null) {
-            return null;
+            return Collections.EMPTY_SET;
         }
-        String sql = "SELECT * FROM auth.roles WHERE id = :id";
-        Set<Role> roles = new HashSet<>();
+
+        List<UUID> roleId = new ArrayList<>();
         for (UserRole userRole : userRoles) {
-            SqlParameterSource params = new MapSqlParameterSource()
-                    .addValue("id", userRole.getRoleId());
-            roles.add(template.queryForObject(sql, params, roleMapper));
+            roleId.add(userRole.getRoleId());
         }
-        return roles;
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("id", roleId);
+
+        String sql = "SELECT * FROM auth.roles WHERE id IN :id";
+        List<Role> roles = template.query(sql, params, roleMapper);
+
+        return new HashSet<>(roles);
     }
 
     public Role search(String name){
