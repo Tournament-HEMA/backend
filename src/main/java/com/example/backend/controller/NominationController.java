@@ -20,7 +20,7 @@ public class NominationController {
         this.nominationService = nominationService;
     }
 
-    @PostMapping(value = "/nominations")
+    @PostMapping(value = "/user/nominations")
     public ResponseEntity<?> create(@RequestBody Nomination nomination) {
         final boolean created = nominationService.create(nomination);
         return created
@@ -28,7 +28,7 @@ public class NominationController {
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
-    @GetMapping(value = "/nominations")
+    @GetMapping(value = "/guest/nominations")
     public ResponseEntity<List<Nomination>> findAll() {
         final List<Nomination> nominations = nominationService.findAll();
 
@@ -37,7 +37,7 @@ public class NominationController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/nominations/findById")
+    @GetMapping(value = "/guest/nominations/findById")
     public ResponseEntity<Nomination> findByNominationId(@RequestParam(value = "nominationId") UUID nominationId)
     {
         final Nomination nomination = nominationService.findByNominationId(nominationId);
@@ -47,7 +47,7 @@ public class NominationController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/nominations/findByTournament")
+    @GetMapping(value = "/guest/nominations/findByTournament")
     public ResponseEntity<List<Nomination>> findByTournamentId(@RequestParam(value = "tournamentId") UUID tournamentId)
     {
         final List<Nomination> nominations = nominationService.findByTournamentId(tournamentId);
@@ -57,7 +57,7 @@ public class NominationController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/nominations/findByName")
+    @GetMapping(value = "/guest/nominations/findByName")
     public ResponseEntity<List<Nomination>> findByName(@RequestParam(value = "name") String name)
     {
         final List<Nomination> nominations = nominationService.findByName(name);
@@ -67,7 +67,7 @@ public class NominationController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/nominations/findByCategory")
+    @GetMapping(value = "/guest/nominations/findByCategory")
     public ResponseEntity<List<Nomination>> findByCategory(@RequestParam(value = "category") String category)
     {
         final List<Nomination> nominations = nominationService.findByCategory(category);
@@ -77,7 +77,7 @@ public class NominationController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/nominations/findByTournamentIdAndCategory")
+    @GetMapping(value = "/guest/nominations/findByTournamentIdAndCategory")
     public ResponseEntity<List<Nomination>> findByTournamentIdAndCategory(@RequestParam(value = "tournamentId") UUID tournamentId,
                                                                           @RequestParam(value = "category") String category)
     {
@@ -88,7 +88,7 @@ public class NominationController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping(value = "/nominations")
+    @PutMapping(value = "/user/nominations")
     public ResponseEntity<?> update(@RequestParam(value = "nominationId") UUID nominationId,
                                     @RequestBody Nomination newNomination) {
         final boolean updated = nominationService.update(nominationId, newNomination);
@@ -98,7 +98,7 @@ public class NominationController {
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
-    @DeleteMapping(value = "/nominations")
+    @DeleteMapping(value = "/user/nominations")
     public ResponseEntity<?> delete(@RequestParam(value = "nominationId") UUID nominationId) {
         final boolean deleted = nominationService.delete(nominationId);
 

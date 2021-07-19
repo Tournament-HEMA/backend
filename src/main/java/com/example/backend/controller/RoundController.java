@@ -20,7 +20,7 @@ public class RoundController {
         this.roundService = roundService;
     }
 
-    @PostMapping(value = "/rounds")
+    @PostMapping(value = "/user/rounds")
     public ResponseEntity<?> create(@RequestBody Round round) {
         final boolean created = roundService.create(round);
         return created
@@ -28,7 +28,7 @@ public class RoundController {
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
-    @GetMapping(value = "/rounds")
+    @GetMapping(value = "/guest/rounds")
     public ResponseEntity<List<Round>> findAll() {
         final List<Round> rounds = roundService.findAll();
 
@@ -37,7 +37,7 @@ public class RoundController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/rounds/findById")
+    @GetMapping(value = "/guest/rounds/findById")
     public ResponseEntity<Round> findByRoundId(@RequestParam(value = "roundId") UUID roundId)
     {
         final Round round = roundService.findByRoundId(roundId);
@@ -47,7 +47,7 @@ public class RoundController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/rounds/findByNominationId")
+    @GetMapping(value = "/guest/rounds/findByNominationId")
     public ResponseEntity<List<Round>> findByNominationId(@RequestParam(value = "nominationId") UUID nominationId)
     {
         final List<Round> rounds = roundService.findByNominationId(nominationId);
@@ -57,7 +57,7 @@ public class RoundController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/rounds/findByNominationIdAndNumber")
+    @GetMapping(value = "/guest/rounds/findByNominationIdAndNumber")
     public ResponseEntity<Round> findByNominationIdAndNumber(@RequestParam(value = "nominationId") UUID nominationId,
                                                              @RequestParam(value = "number") int number)
     {
@@ -68,7 +68,7 @@ public class RoundController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping(value = "/rounds")
+    @PutMapping(value = "/user/rounds")
     public ResponseEntity<?> update(@RequestParam(value = "roundId") UUID roundId,
                                     @RequestBody Round newRound) {
         final boolean updated = roundService.update(roundId, newRound);
@@ -78,7 +78,7 @@ public class RoundController {
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
-    @DeleteMapping(value = "/rounds")
+    @DeleteMapping(value = "/user/rounds")
     public ResponseEntity<?> delete(@RequestParam(value = "roundId") UUID roundId) {
         final boolean deleted = roundService.delete(roundId);
 
