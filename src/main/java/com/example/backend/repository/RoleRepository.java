@@ -43,7 +43,7 @@ public class RoleRepository {
         SqlParameterSource params = new MapSqlParameterSource()
                 .addValue("id", roleId);
 
-        String sql = "SELECT * FROM auth.roles WHERE id IN :id";
+        String sql = "SELECT * FROM auth.roles WHERE id IN (:id)";
         List<Role> roles = template.query(sql, params, roleMapper);
 
         return new HashSet<>(roles);

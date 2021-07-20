@@ -2,6 +2,8 @@ package com.example.backend.model;
 
 import com.example.backend.repository.RoleRepository;
 import com.example.backend.repository.UserRoleRepository;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,12 +14,19 @@ import java.util.Set;
 import java.util.UUID;
 
 @Data
+@ApiModel(value = "User model")
 public class User implements UserDetails {
+    @ApiModelProperty(value = "Id пользователя. При вставке генерится автоматически. NotNull.")
     private UUID id;
+    @ApiModelProperty(value = "Уникальный логин пользователя. NotNull.", required = true)
     private String username;
+    @ApiModelProperty(value = "Пароль пользователя. NotNull.", required = true)
     private String password;
+    @ApiModelProperty(value = "Имя пользователя. NotNull.", required = true)
     private String firstName;
+    @ApiModelProperty(value = "Фамилия пользователя. NotNull.", required = true)
     private String lastName;
+    @ApiModelProperty(value = "Отчество пользователя.")
     private String patronymic;
     private Set<Role> roles;
 

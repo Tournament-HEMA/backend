@@ -2,6 +2,7 @@ package com.example.backend.controller;
 
 import com.example.backend.model.Club;
 import com.example.backend.service.ClubService;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +21,22 @@ public class ClubController {
         this.clubService = clubService;
     }
 
+    @ApiOperation(
+            value = "Добавление нового клуба.",
+            notes = "Доступ имеют только судьи(users) и админы(admins).")
     @PostMapping(value = "/user/clubs")
-    public ResponseEntity<?> create(@RequestBody Club club) {
+    public ResponseEntity<?> create(
+            @ApiParam(value = "Модель для добавления нового клуба.", required = true)
+            @RequestBody Club club) {
         final boolean created = clubService.create(club);
         return created
                 ? new ResponseEntity<>(HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
+    @ApiOperation(
+            value = "Получение всех клубов.",
+            notes = "Доступ имеют все пользователи.")
     @GetMapping(value = "/guest/clubs")
     public ResponseEntity<List<Club>> findAll() {
         final List<Club> clubs = clubService.findAll();
@@ -37,8 +46,13 @@ public class ClubController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @ApiOperation(
+            value = "Поиск клуба по id.",
+            notes = "Доступ имеют все пользователи.")
     @GetMapping(value = "/guest/clubs/findById")
-    public ResponseEntity<Club> findByClubId(@RequestParam(value = "clubId") UUID clubId)
+    public ResponseEntity<Club> findByClubId(
+            @ApiParam(value = "Id искомого клуба.", required = true)
+            @RequestParam(value = "clubId") UUID clubId)
     {
         final Club club = clubService.findByClubId(clubId);
 
@@ -47,8 +61,13 @@ public class ClubController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @ApiOperation(
+            value = "Поиск клуба по его названию.",
+            notes = "Доступ имеют все пользователи.")
     @GetMapping(value = "/guest/clubs/findByClubname")
-    public ResponseEntity<Club> findByClubname(@RequestParam(value = "clubname") String clubname)
+    public ResponseEntity<Club> findByClubname(
+            @ApiParam(value = "Название искомого клуба.", required = true)
+            @RequestParam(value = "clubname") String clubname)
     {
         final Club club = clubService.findByClubname(clubname);
 
@@ -57,8 +76,13 @@ public class ClubController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @ApiOperation(
+            value = "Поиск клуба по его активности(активен/неактивен).",
+            notes = "Доступ имеют все пользователи.")
     @GetMapping(value = "/guest/clubs/findByActive")
-    public ResponseEntity<List<Club>> findByActive(@RequestParam(value = "active") boolean active)
+    public ResponseEntity<List<Club>> findByActive(
+            @ApiParam(value = "Параметр активен/неактивен.", required = true)
+            @RequestParam(value = "active") boolean active)
     {
         final List<Club> clubs = clubService.findByActive(active);
 
@@ -67,8 +91,13 @@ public class ClubController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @ApiOperation(
+            value = "Поиск клуба по его местоположению(город).",
+            notes = "Доступ имеют все пользователи.")
     @GetMapping(value = "/guest/clubs/findByCity")
-    public ResponseEntity<List<Club>> findByCity(@RequestParam(value = "city") String city)
+    public ResponseEntity<List<Club>> findByCity(
+            @ApiParam(value = "Название города.", required = true)
+            @RequestParam(value = "city") String city)
     {
         final List<Club> clubs = clubService.findByCity(city);
 
@@ -77,9 +106,15 @@ public class ClubController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @ApiOperation(
+            value = "Модификация данных клуба.",
+            notes = "Доступ имеют только судьи(users) и админы(admins).")
     @PutMapping(value = "/user/clubs")
-    public ResponseEntity<?> update(@RequestParam(value = "clubId") UUID oldClubId,
-                                    @RequestBody Club newClub) {
+    public ResponseEntity<?> update(
+            @ApiParam(value = "Id клуба, данные которого нужно изменить.", required = true)
+            @RequestParam(value = "clubId") UUID oldClubId,
+            @ApiParam(value = "Модель для изменения данных клуба.", required = true)
+            @RequestBody Club newClub) {
         final boolean updated = clubService.update(oldClubId, newClub);
 
         return updated
@@ -87,8 +122,13 @@ public class ClubController {
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
+    @ApiOperation(
+            value = "Изменение активности клуба(типо удаления/восстановления).",
+            notes = "Доступ имеют только судьи(users) и админы(admins).")
     @DeleteMapping(value = "/user/clubs")
-    public ResponseEntity<?> delete(@RequestParam(value = "clubId") UUID clubId) {
+    public ResponseEntity<?> delete(
+            @ApiParam(value = "Id клуба, который удаляем/восстанавливаем.", required = true)
+            @RequestParam(value = "clubId") UUID clubId) {
         final boolean deleted = clubService.delete(clubId);
 
         return deleted

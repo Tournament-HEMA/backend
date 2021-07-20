@@ -27,8 +27,8 @@ INSERT INTO auth.users (id, username, password, firstname, lastname, patronymic)
 INSERT INTO auth.users (id, username, password, firstname, lastname, patronymic) VALUES ('101fe082-2d9e-4eea-89ba-26c920a45ef2', 'user3', '12345', 'pawel', 'krouch', 'milohin');
 INSERT INTO auth.users (id, username, password, firstname, lastname, patronymic) VALUES ('3df823ff-a995-42b6-ab71-bc7ecfeca418', 'user4', '12345', 'pawel', 'krouch', 'milohin');
 
-INSERT INTO auth.roles (id, name) VALUES ('16d97fa0-459a-48ea-ba08-5a3833a9d524', 'ROLE_USER');
-INSERT INTO auth.roles (id, name) VALUES ('75fdfd98-8567-4494-a964-68da48e1f68c', 'ROLE_ADMIN');
+INSERT INTO auth.roles (id, name) VALUES ('16d97fa0-459a-48ea-ba08-5a3833a9d524', 'USER');
+INSERT INTO auth.roles (id, name) VALUES ('75fdfd98-8567-4494-a964-68da48e1f68c', 'ADMIN');
 
 INSERT INTO auth.users_roles (id, user_id, role_id) VALUES ('036715bf-2591-4193-920e-a9e55c030eba', '0868961a-4d73-4d76-bc86-20227c371de9', '16d97fa0-459a-48ea-ba08-5a3833a9d524');
 INSERT INTO auth.users_roles (id, user_id, role_id) VALUES ('c67062d7-8b63-407c-9230-42cddf3c9e86', '0868961a-4d73-4d76-bc86-20227c371de9', '75fdfd98-8567-4494-a964-68da48e1f68c');
